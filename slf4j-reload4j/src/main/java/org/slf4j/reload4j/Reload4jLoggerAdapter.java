@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2004-2011 QOS.ch
  * All rights reserved.
- *
+ * <p>
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
  * "Software"), to  deal in  the Software without  restriction, including
@@ -9,10 +9,10 @@
  * distribute,  sublicense, and/or sell  copies of  the Software,  and to
  * permit persons to whom the Software  is furnished to do so, subject to
  * the following conditions:
- *
+ * <p>
  * The  above  copyright  notice  and  this permission  notice  shall  be
  * included in all copies or substantial portions of the Software.
- *
+ * <p>
  * THE  SOFTWARE IS  PROVIDED  "AS  IS", WITHOUT  WARRANTY  OF ANY  KIND,
  * EXPRESS OR  IMPLIED, INCLUDING  BUT NOT LIMITED  TO THE  WARRANTIES OF
  * MERCHANTABILITY,    FITNESS    FOR    A   PARTICULAR    PURPOSE    AND
@@ -20,7 +20,6 @@
  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 package org.slf4j.reload4j;
 
@@ -45,18 +44,19 @@ import org.slf4j.spi.LoggingEventAware;
 import org.slf4j.spi.LoggingEventBuilder;
 
 /**
- * A wrapper over {@link org.apache.log4j.Logger org.apache.log4j.Logger} 
+ * log4j.Logger实例的包装类，即适配器模式
+ * A wrapper over {@link org.apache.log4j.Logger org.apache.log4j.Logger}
  * conforming to the {@link Logger} interface.
- * 
+ *
  * <p>
  * Note that the logging levels mentioned in this class refer to those defined
  * in the <a href=
  * "http://logging.apache.org/log4j/docs/api/org/apache/log4j/Level.html">
  * <code>org.apache.log4j.Level</code></a> class.
- * 
+ *
  * <p>This class is a copy-and-paste of Log4j12LoggerAdapter from the
  * slf4j-log4j12 module.</p>
- * 
+ *
  * @author Ceki G&uuml;lc&uuml;
  * @since 2.0.0-alpha6
  */
@@ -79,7 +79,7 @@ public final class Reload4jLoggerAdapter extends LegacyAbstractLogger implements
 
     /**
      * Is this logger instance enabled for the TRACE level?
-     * 
+     *
      * @return True if this Logger is enabled for level TRACE, false otherwise.
      */
     public boolean isTraceEnabled() {
@@ -88,7 +88,7 @@ public final class Reload4jLoggerAdapter extends LegacyAbstractLogger implements
 
     /**
      * Is this logger instance enabled for the DEBUG level?
-     * 
+     *
      * @return True if this Logger is enabled for level DEBUG, false otherwise.
      */
     public boolean isDebugEnabled() {
@@ -97,7 +97,7 @@ public final class Reload4jLoggerAdapter extends LegacyAbstractLogger implements
 
     /**
      * Is this logger instance enabled for the INFO level?
-     * 
+     *
      * @return True if this Logger is enabled for the INFO level, false otherwise.
      */
     public boolean isInfoEnabled() {
@@ -106,7 +106,7 @@ public final class Reload4jLoggerAdapter extends LegacyAbstractLogger implements
 
     /**
      * Is this logger instance enabled for the WARN level?
-     * 
+     *
      * @return True if this Logger is enabled for the WARN level, false otherwise.
      */
     public boolean isWarnEnabled() {
@@ -115,7 +115,7 @@ public final class Reload4jLoggerAdapter extends LegacyAbstractLogger implements
 
     /**
      * Is this logger instance enabled for level ERROR?
-     * 
+     *
      * @return True if this Logger is enabled for level ERROR, false otherwise.
      */
     public boolean isErrorEnabled() {
@@ -139,6 +139,7 @@ public final class Reload4jLoggerAdapter extends LegacyAbstractLogger implements
 
     /**
      * Called by {@link SubstituteLogger} or by {@link LoggingEventBuilder} instances
+     *
      * @param event
      */
     public void log(LoggingEvent event) {
@@ -170,13 +171,13 @@ public final class Reload4jLoggerAdapter extends LegacyAbstractLogger implements
         if (t != null)
             ti = new ThrowableInformation(t);
 
-        if(event instanceof DefaultLoggingEvent) {
+        if (event instanceof DefaultLoggingEvent) {
             DefaultLoggingEvent defaultLoggingEvent = (DefaultLoggingEvent) event;
             defaultLoggingEvent.setTimeStamp(System.currentTimeMillis());
         }
 
         org.apache.log4j.spi.LoggingEvent log4jEvent = new org.apache.log4j.spi.LoggingEvent(fqcn, logger, event.getTimeStamp(), log4jLevel, formattedMessage,
-                        event.getThreadName(), ti, null, locationInfo, null);
+                event.getThreadName(), ti, null, locationInfo, null);
 
         return log4jEvent;
     }
@@ -184,23 +185,23 @@ public final class Reload4jLoggerAdapter extends LegacyAbstractLogger implements
     private Level toLog4jLevel(int slf4jLevelInt) {
         Level log4jLevel;
         switch (slf4jLevelInt) {
-        case LocationAwareLogger.TRACE_INT:
-            log4jLevel = Level.TRACE;
-            break;
-        case LocationAwareLogger.DEBUG_INT:
-            log4jLevel = Level.DEBUG;
-            break;
-        case LocationAwareLogger.INFO_INT:
-            log4jLevel = Level.INFO;
-            break;
-        case LocationAwareLogger.WARN_INT:
-            log4jLevel = Level.WARN;
-            break;
-        case LocationAwareLogger.ERROR_INT:
-            log4jLevel = Level.ERROR;
-            break;
-        default:
-            throw new IllegalStateException("Level number " + slf4jLevelInt + " is not recognized.");
+            case LocationAwareLogger.TRACE_INT:
+                log4jLevel = Level.TRACE;
+                break;
+            case LocationAwareLogger.DEBUG_INT:
+                log4jLevel = Level.DEBUG;
+                break;
+            case LocationAwareLogger.INFO_INT:
+                log4jLevel = Level.INFO;
+                break;
+            case LocationAwareLogger.WARN_INT:
+                log4jLevel = Level.WARN;
+                break;
+            case LocationAwareLogger.ERROR_INT:
+                log4jLevel = Level.ERROR;
+                break;
+            default:
+                throw new IllegalStateException("Level number " + slf4jLevelInt + " is not recognized.");
         }
         return log4jLevel;
     }

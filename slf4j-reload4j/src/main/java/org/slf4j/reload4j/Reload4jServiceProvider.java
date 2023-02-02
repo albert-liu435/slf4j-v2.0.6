@@ -8,11 +8,14 @@ import org.slf4j.helpers.Util;
 import org.slf4j.spi.MDCAdapter;
 import org.slf4j.spi.SLF4JServiceProvider;
 
+/**
+ * 加载log4j
+ */
 public class Reload4jServiceProvider implements SLF4JServiceProvider {
 
     /**
-     * Declare the version of the SLF4J API this implementation is compiled against. 
-     * The value of this field is modified with each major release. 
+     * Declare the version of the SLF4J API this implementation is compiled against.
+     * The value of this field is modified with each major release.
      */
     // to avoid constant folding by the compiler, this field must *not* be final
     public static String REQUESTED_API_VERSION = "2.0.99"; // !final

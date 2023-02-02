@@ -1,7 +1,7 @@
 /**
  * Copyright (c) 2004-2011 QOS.ch
  * All rights reserved.
- *
+ * <p>
  * Permission is hereby granted, free  of charge, to any person obtaining
  * a  copy  of this  software  and  associated  documentation files  (the
  * "Software"), to  deal in  the Software without  restriction, including
@@ -9,10 +9,10 @@
  * distribute,  sublicense, and/or sell  copies of  the Software,  and to
  * permit persons to whom the Software  is furnished to do so, subject to
  * the following conditions:
- *
+ * <p>
  * The  above  copyright  notice  and  this permission  notice  shall  be
  * included in all copies or substantial portions of the Software.
- *
+ * <p>
  * THE  SOFTWARE IS  PROVIDED  "AS  IS", WITHOUT  WARRANTY  OF ANY  KIND,
  * EXPRESS OR  IMPLIED, INCLUDING  BUT NOT LIMITED  TO THE  WARRANTIES OF
  * MERCHANTABILITY,    FITNESS    FOR    A   PARTICULAR    PURPOSE    AND
@@ -20,7 +20,6 @@
  * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
  * OF CONTRACT, TORT OR OTHERWISE,  ARISING FROM, OUT OF OR IN CONNECTION
  * WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
- *
  */
 package org.slf4j.reload4j;
 
@@ -33,9 +32,10 @@ import org.slf4j.Logger;
 import org.slf4j.helpers.Util;
 
 /**
+ * 用于返回Reload4jLoggerAdapter实例
  * Log4jLoggerFactory is an implementation of {@link ILoggerFactory} returning
  * the appropriate named {@link Reload4jLoggerAdapter} instance.
- * 
+ *
  * @author Ceki G&uuml;lc&uuml;
  */
 public class Reload4jLoggerFactory implements ILoggerFactory {
@@ -68,7 +68,7 @@ public class Reload4jLoggerFactory implements ILoggerFactory {
 
     /*
      * (non-Javadoc)
-     * 
+     *
      * @see org.slf4j.ILoggerFactory#getLogger(java.lang.String)
      */
     public Logger getLogger(String name) {
@@ -76,12 +76,13 @@ public class Reload4jLoggerFactory implements ILoggerFactory {
         if (slf4jLogger != null) {
             return slf4jLogger;
         } else {
+            //log4j logger实例
             org.apache.log4j.Logger log4jLogger;
             if (name.equalsIgnoreCase(Logger.ROOT_LOGGER_NAME))
                 log4jLogger = LogManager.getRootLogger();
             else
                 log4jLogger = LogManager.getLogger(name);
-
+            //进行适配
             Logger newInstance = new Reload4jLoggerAdapter(log4jLogger);
             Logger oldInstance = loggerMap.putIfAbsent(name, newInstance);
             return oldInstance == null ? newInstance : oldInstance;
